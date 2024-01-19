@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "codex-52931"
+  },
+  "targets": {
+    "codex-52931": {
+      "hosting": {
+        "codex-52931": [
+          "codex"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -1,34 +1,85 @@
-import { Text, View, SafeAreaView, Image, TextInput } from 'react-native'
-import React, { useLayoutEffect } from 'react'
-import Book from '../assets/Book.png'
-import { auth } from '../firebase'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react';
+import { Button, KeyboardAvoidingView, Platform, Text, TextInput, View } from 'react-native';
+import tw from 'twrnc';
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { Image } from 'react-native-elements';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase'
 
 const LoginScreen = () => {
+  const LoginImage = require('../assets/loginImage2.png');
 
-    const navigation = useNavigation()  
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerShown: false
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+
+  const handleEmailLogin = () => {
+    if (email && password) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log('Logged in user:', user);
+          getDoc(doc(db, 'users', user.uid)).then((doc) => {
+            if (doc.exists()) {
+              const userData = doc.data();
+            }
+          });
         })
-    })
+        .catch((signInError) => {
+          createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              const newUser = userCredential.user;
+              setDoc(doc(db, 'users', newUser.uid), {
+                username: username,
+                bars: [],
+              });
+            })
+            .catch((createUserError) => {
+              console.error('Error creating user:', createUserError);
+            });
+        });
+    }
+  };
 
-    return (
-        <SafeAreaView className='flex-1 items-center bg-[#9f9a9a]'>
-            {/* LOGO */}
-            <Image className='absolute bottom-10' source={Book} />
-            <Text className="text-black text-[50px] tracking-[15px] mt-24">CODEX</Text>
-            <View className='w-2/3 h-3/6 mb-28 bg-[#ffffffca] lg:w-1/4'>
-                <TextInput placeholder='EMAIL'/>
-                <TextInput placeholder='PASSWORD'/>
-            </View>
-            <View className='h-'>
-                {/* GOOGLE AUTH HERE */}
-            </View>
-        </SafeAreaView>
-    )
-}
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'position' : undefined}
+      style={tw`flex-1 bg-black items-center mt-[-70px]`}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 300}
+    >
+      <View style={tw`flex-1 bg-black pt-10 items-center justify-center`}>
+        <Text style={tw`mb-5 text-white text-2xl font-bold`}>GUINNESS FIGHT</Text>
+        <Image source={LoginImage} style={tw`w-[300px] h-[300px] mb-5`} />
+        <Text style={tw` mb-2 text-white`}>Email:</Text>
+        <TextInput
+          style={tw`p-2 border border-gray-300 rounded text-white w-60 bg-opacity-80`}
+          placeholder="Email"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <Text style={tw`mt-2 mb-2 text-white`}>Password:</Text>
+        <TextInput
+          style={tw`p-2 border border-gray-300 rounded text-white w-60 bg-opacity-80`}
+          placeholder="Password"
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          secureTextEntry={true}
+        />
+        <View style={tw`mt-5 p-2 bg-white text-black rounded`}>
+          <Button
+            title="My Drinking Shoes Are On"
+            onPress={handleEmailLogin}
+            color="#000"
+          />
+        </View>
+      </View>
+    </KeyboardAvoidingView>
+  );
+};
 
-export default LoginScreen
-
+export default LoginScreen;
