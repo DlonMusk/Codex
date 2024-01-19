@@ -24,7 +24,8 @@
     "updates": {
       "useClassicUpdates": true,
       "fallbackToCacheTimeout": 0,
-      "enabled": true
+      "enabled": true,
+      "url": "https://u.expo.dev/6613e1f4-3ff2-46ba-ac2a-5c97b1a528b6"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,8 +38,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "15f95e74-68c9-4e05-b368-aa5597f7f49c"
+        "projectId": "6613e1f4-3ff2-46ba-ac2a-5c97b1a528b6"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

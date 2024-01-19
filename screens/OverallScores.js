@@ -8,7 +8,6 @@ import {
 import {
     collection,
     query,
-    where,
     getDocs,
 } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -18,16 +17,15 @@ import { useNavigation } from '@react-navigation/native';
 
 const OverallScores = ({ route }) => {
     const { uid } = route.params;
-    console.log('UID: ', uid);
+
     const [bars, setBars] = useState([]);
     const [userRatings, setUserRatings] = useState([]);
-    const [overallScores, setOverallScores] = useState([]); // Initialize with an empty array
+    const [overallScores, setOverallScores] = useState([]); 
 
-    const navigation = useNavigation(); // Get the navigation object
+    const navigation = useNavigation(); 
 
     const navigateBackToBars = () => {
-      // Navigate back to the Bars Screen
-      navigation.goBack();
+        navigation.navigate('Bars');
     };
 
     useEffect(() => {
@@ -72,6 +70,7 @@ const OverallScores = ({ route }) => {
                 const barRatings = userRatings.filter((rating) => rating.barName === bar.name);
                 if (barRatings.length > 0) {
                     const totalScore = barRatings.reduce((acc, rating) => {
+                        console.log(typeof(rating))
                         return (
                             acc +
                             parseInt(rating.priceRating) +

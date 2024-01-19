@@ -25,16 +25,7 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
-        getDoc(doc(db, "users", userAuth.uid)).then(doc => {
-          if (doc.exists()) {
-            const userData = doc.data()
-            setUser(userAuth.uid)
-          }
-          else {
-            console.log("no document")
-          }
-        })
-
+        setUser(userAuth.uid)
       }
     })
     console.log(user)

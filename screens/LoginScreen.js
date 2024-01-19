@@ -7,8 +7,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { Image } from 'react-native-elements';
-import { setDoc, doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase'
+import { auth} from '../firebase'
 
 const LoginScreen = () => {
   const LoginImage = require('../assets/loginImage2.png');
@@ -16,29 +15,15 @@ const LoginScreen = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
 
   const handleEmailLogin = () => {
     if (email && password) {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log('Logged in user:', user);
-          getDoc(doc(db, 'users', user.uid)).then((doc) => {
-            if (doc.exists()) {
-              const userData = doc.data();
-            }
-          });
         })
-        .catch((signInError) => {
+        .catch(() => {
           createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-              const newUser = userCredential.user;
-              setDoc(doc(db, 'users', newUser.uid), {
-                username: username,
-                bars: [],
-              });
-            })
             .catch((createUserError) => {
               console.error('Error creating user:', createUserError);
             });

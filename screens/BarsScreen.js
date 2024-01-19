@@ -12,8 +12,6 @@ import {
 import {
     collection,
     addDoc,
-    query,
-    where,
     getDocs,
     setDoc,
     doc,
@@ -246,12 +244,12 @@ const BarsScreen = ({ route }) => {
 
                         {selectedBarRatings && (
                             <View style={tw`mb-15`}>
-                                <Text style={tw`text-lg mb-2 ${selectedBarRatings.priceRating === 10 ? 'text-green-500' : 'text-black'}`}>Price Rating: {selectedBarRatings.priceRating}</Text>
-                                <Text style={tw`text-lg mb-2 ${selectedBarRatings.tasteRating === 10 ? 'text-green-500' : 'text-black'}`}>Taste Rating: {selectedBarRatings.tasteRating}</Text>
-                                <Text style={tw`text-lg mb-2 ${selectedBarRatings.looksRating === 10 ? 'text-green-500' : 'text-black'}`}>Looks Rating: {selectedBarRatings.looksRating}</Text>
-                                <Text style={tw`text-lg mb-2 ${selectedBarRatings.textureRating === 10 ? 'text-green-500' : 'text-black'}`}>Texture Rating: {selectedBarRatings.textureRating}</Text>
-                                <Text style={tw`text-lg mb-2 ${selectedBarRatings.lacqueringRating === 10 ? 'text-green-500' : 'text-black'}`}>Lacquering Rating: {selectedBarRatings.lacqueringRating}</Text>
-                                <Text style={tw`text-lg mb-2 ${selectedBarRatings.temperatureRating === 10 ? 'text-green-500' : 'text-black'}`}>Temperature Rating: {selectedBarRatings.temperatureRating}</Text>
+                                <Text style={tw`text-lg mb-2`}>Price Rating: {selectedBarRatings.priceRating}</Text>
+                                <Text style={tw`text-lg mb-2`}>Taste Rating: {selectedBarRatings.tasteRating}</Text>
+                                <Text style={tw`text-lg mb-2`}>Looks Rating: {selectedBarRatings.looksRating}</Text>
+                                <Text style={tw`text-lg mb-2`}>Texture Rating: {selectedBarRatings.textureRating}</Text>
+                                <Text style={tw`text-lg mb-2`}>Lacquering Rating: {selectedBarRatings.lacqueringRating}</Text>
+                                <Text style={tw`text-lg mb-2`}>Temperature Rating: {selectedBarRatings.temperatureRating}</Text>
                             </View>
                         )}
                     </View>
